@@ -1,6 +1,6 @@
 # Compiler and flags
-CC = gcc
-CFLAGS = -Wall 
+CC = gcc -ansi
+CFLAGS = -Wall -g 
 LDFLAGS = -lm
 
 # Directories
