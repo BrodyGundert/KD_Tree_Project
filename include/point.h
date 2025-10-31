@@ -1,43 +1,56 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <stdio.h>
 #define MAX_DIMENSIONS 16
 
-/**
- * Structure representing a point in k-dimensional space
- */
-typedef struct {
-    double coordinates[MAX_DIMENSIONS];
-    int dimensions;
-    void *data;  // Optional: store additional data with the point
-} Point;
+// structure representing a point in k-dimensional space 
+typedef struct{
+    double coordinates[MAX_DIMENSIONS]; 
+    int dimensions; 
+    void *data; 
+} Point; 
 
-/**
- * Create a new point with specified coordinates
- * @param coords Array of coordinates
- * @param dim Number of dimensions
- * @return Pointer to new Point, or NULL on failure
- */
-Point *point_create(double *coords, int dim);
+// creates a new point with specified coordinates 
+Point *createPoint(double *coords, int dim){
+    if(dim <= 0 || dim > MAX_DIMENSIONS || coords == NULL){
+        printf("Error. Invalid dimensions or NULL coordinates.\n"); 
+        return NULL; 
+    }
+    Point *p = (Point *)malloc(sizeof(Point)); 
+    if(!p){
+        printf("Error. Memory allocation failed.\n"); 
+        return NULL; 
+    }
+    
+    p->dimensions = dim; 
+    p->data = NULL; 
+    for(int x = 0; x < dim; x++){
+        p->coordiantes[x] = coords[i]; 
+    }
+    return p; 
+}
 
-/**
- * Free a point
- * @param p Point to free
- */
-void point_destroy(Point *p);
+// free a point 
+void destroyPoint(Point *p); 
 
-/**
- * Calculate squared Euclidean distance between two points
- * @param p1 First point
- * @param p2 Second point
- * @return Squared distance
- */
-double point_distance_squared(Point *p1, Point *p2);
+//calculates squared Euclidean distance between two points
+double distanceSquared(Point *p1, Point *p2); 
 
-/**
- * Print a point (for debugging)
- * @param p Point to print
- */
-void point_print(Point *p);
+//prints a point, its main purpose is for debugging 
+void printPoint(Point *p){
+    if(!p){
+        printf("NULL\n"); 
+        return; 
+    }
+    
+    printf("Point (%dD): [", p->dimensions); 
+    for(int x = 0; x < p->dimensions; x++){
+        if(x < p->dimensions[x]){
+            printf(", "); 
+        }
+    }
+    printf("]\n"); 
+} 
 
-#endif // POINT_H
+#endif
