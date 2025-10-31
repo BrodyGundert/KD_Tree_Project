@@ -3,54 +3,55 @@
 
 #include "point.h"
 
-/**
- * Structure representing a node in a KD-tree
- */
-typedef struct kd_node {
-    Point *point;
-    struct kd_node *left;
-    struct kd_node *right;
-    int depth;  // Depth of this node in the tree (determines splitting axis)
-} KDNode;
+// structure representing a node in a KD-tree 
+typedef struct Node{
+    Point *point; 
+    struct Node *left; 
+    struct Node *right; 
+    int depth; 
+}Node; 
 
-/**
- * Create a new KD tree node
- * @param p Point to store in the node
- * @param depth Depth of the node
- * @return Pointer to new KDNode, or NULL on failure
- */
-KDNode *kd_node_create(Point *p, int depth);
+// creates a new KD tree node 
+Node *createKDNode(Point *p, int depth){
+    if(!p){
+        printf("Error. Cannot create node with NULL point.\n"); 
+        return NULL: 
+    }
+    
+    Node *node = (Node *)malloc(sizeof(Node)); 
+    if(!node){
+        printf("Error. Memory allocation failed.\n"); 
+        return NULL; 
+    }
+    
+    node->point = p; 
+    node->left = NULL; 
+    node->right = NULL; 
+    node->depth = depth; 
+    
+    return node; 
+}
 
-/**
- * Free a KD tree node and all its children
- * @param node Node to free
- */
-void kd_node_destroy(KDNode *node);
+// free a KD tree and all its children  
+void destroyKDNode(Node *node); 
 
-/**
- * Free a single node (does not free children)
- * @param node Node to free
- */
-void kd_node_destroy_single(KDNode *node);
+// free a single node and doesn't free children 
+void destroySingleKDNode(Node *node); 
 
-/**
- * Get the splitting axis for a node based on its depth
- * @param node Node to get axis for
- * @return Split axis (0-based dimension index)
- */
-int kd_node_get_axis(KDNode *node);
+// gets the splitting axis for a node based on its depth 
+int getAxis(Node *node); 
 
-/**
- * Get the coordinate value for the splitting axis
- * @param node Node to get coordinate from
- * @return Coordinate value
- */
-double kd_node_get_coordinate(KDNode *node);
+// gets the coordinate value for the splitting acis 
+double getCoordinate(Node *node); 
 
-/**
- * Print a node (for debugging)
- * @param node Node to print
- */
-void kd_node_print(KDNode *node);
+//prints a node, main purpose is for debugging 
+void printKDNode(Node *node){
+    if(!node){
+        printf("(Null Node)\n"); 
+        return; 
+    }
+    printf("Node (depth = %d, axis = %d): ", node->depth, getAxis(node)); 
+    printPoint(node->point); 
+} 
 
-#endif // KD_NODE_H
+#endif
